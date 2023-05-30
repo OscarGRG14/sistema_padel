@@ -1,0 +1,32 @@
+.tournament-list {
+    padding: 20px;
+}
+
+.tournament-list .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+
+}
+
+.tournament-list .card-container .card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    max-width: 300px; /* Define el ancho máximo de la tarjeta */
+}
+
+.tournament-list .card-container .card-content {
+    margin-bottom: 10px;
+}
+
+.tournament-list .card-container .card-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.tournament-list .card-container .card-buttons button {
+    margin-left: 10px;
+}
+  

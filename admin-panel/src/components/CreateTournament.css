@@ -1,0 +1,47 @@
+.create-tournament {
+    max-width: 400px;
+    padding: 20px;
+}
+
+.create-tournament h2 {
+    margin-bottom: 10px;
+}
+
+.create-tournament form {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-tournament form>div {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.create-tournament label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.create-tournament input[type="date"],
+.create-tournament input[type="time"],
+.create-tournament input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.create-tournament button[type="submit"] {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+}
+
+.create-tournament button[type="submit"]:hover {
+    background-color: #0069d9;
+}
