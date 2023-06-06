@@ -1,0 +1,102 @@
+button {
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 1.1rem;
+}
+
+.players-list {
+  padding: 50px;
+}
+
+.card-container {
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.card {
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.card-content {
+  text-align: center;
+  margin-bottom: 10px;
+  transition: 0.1s all linear;
+}
+
+#resize {
+  height: 22px;
+  overflow: hidden;
+  transition: 0.1s all linear;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h3 {
+  cursor: pointer;
+  color: #252525;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #252525;
+  display: flex;
+  text-align: left;
+  margin-bottom: 5px;
+  flex-direction: column;
+}
+
+input {
+  padding: 8px;
+  transition: 0.1s;
+  border-bottom: 2px solid #ccc;
+}
+
+input:focus {
+  padding: 8px;
+  border-bottom: 3px solid #1858c5;
+}
+
+.button-container {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.save-button {
+  background-color: #4caf50;
+}
+
+.cancel-button {
+  background-color: #f44336;
+}
+
+.edit-button {
+  background-color: #2196f3;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.hide-button {
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: #272b28;
+}
+
+.container-edit {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  gap: 5px;
+}
