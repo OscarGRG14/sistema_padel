@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './PlayersList.css'; // Importa el archivo CSS de estilos
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./PlayersList.css"; // Importa el archivo CSS de estilos
+import { motion } from "framer-motion";
 
 const PlayersList = () => {
   const [players, setPlayers] = useState([]);
+  const [resize, setResize] = useState(false);
   const [editingPlayerId, setEditingPlayerId] = useState(null);
   const [editedPlayerData, setEditedPlayerData] = useState({
-    nombre: '',
-    apellido: '',
-    sexo: '',
-    fechaNacimiento: '',
-    nacionalidad: '',
-    documento: '',
+    nombre: "",
+    apellido: "",
+    sexo: "",
+    fechaNacimiento: "",
+    nacionalidad: "",
+    documento: "",
     rango: 0,
     nivel: 0,
     esAdministrador: false,
@@ -25,7 +27,7 @@ const PlayersList = () => {
     // Función para obtener los jugadores
     const fetchPlayers = () => {
       axios
-        .get('http://localhost:5000/users')
+        .get("http://localhost:5000/users")
         .then((response) => {
           setPlayers(response.data);
         })
@@ -91,10 +93,7 @@ const PlayersList = () => {
 
   const handleSaveEdit = () => {
     axios
-      .put(
-        `http://localhost:5000/users/${editingPlayerId}`,
-        editedPlayerData
-      )
+      .put(`http://localhost:5000/users/${editingPlayerId}`, editedPlayerData)
       .then((response) => {
         // Actualizar la lista de jugadores después de editar uno
         setPlayers(
@@ -106,12 +105,12 @@ const PlayersList = () => {
         // Restablecer los valores de edición
         setEditingPlayerId(null);
         setEditedPlayerData({
-          nombre: '',
-          apellido: '',
-          sexo: '',
-          fechaNacimiento: '',
-          nacionalidad: '',
-          documento: '',
+          nombre: "",
+          apellido: "",
+          sexo: "",
+          fechaNacimiento: "",
+          nacionalidad: "",
+          documento: "",
           rango: 0,
           nivel: 0,
           esAdministrador: false,
@@ -126,31 +125,52 @@ const PlayersList = () => {
       });
   };
 
+  const hidden = (e) => {
+    setResize(!resize);
+    const element = e.currentTarget.parentElement.parentElement;
+    if (resize) element.setAttribute("id", "resize");
+    else element.removeAttribute("id");
+  };
+
   return (
-    <div className="players-list">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      id="player-list"
+      className="players-list"
+    >
       <h2>Listado de Jugadores</h2>
       <div className="card-container">
         {players.map((player) => (
           <div className="card" key={player.id}>
+            {/* onClick={(e) => hidden(e)} */}
+            {/* <button className="hide-button" onClick={(e) => hidden(e)}>
+              Ocultar
+            </button> */}
             <div className="card-content">
               {editingPlayerId === player.id ? (
                 <>
-                  <h3>
+                  <p>
+                    <strong>Nombre:</strong>{" "}
                     <input
                       type="text"
                       name="nombre"
                       value={editedPlayerData.nombre}
                       onChange={handleInputChange}
-                    />{' '}
+                    />{" "}
+                  </p>
+                  <p>
+                    <strong>Apellido:</strong>
                     <input
                       type="text"
                       name="apellido"
                       value={editedPlayerData.apellido}
                       onChange={handleInputChange}
                     />
-                  </h3>
+                  </p>
                   <p>
-                    <strong>Sexo:</strong>{' '}
+                    <strong>Sexo:</strong>{" "}
                     <input
                       type="text"
                       name="sexo"
@@ -159,7 +179,7 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Fecha de Nacimiento:</strong>{' '}
+                    <strong>Fecha de Nacimiento:</strong>{" "}
                     <input
                       type="date"
                       name="fechaNacimiento"
@@ -168,11 +188,11 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Edad:</strong>{' '}
+                    <strong>Edad:</strong>{" "}
                     {calculateAge(editedPlayerData.fechaNacimiento)}
                   </p>
                   <p>
-                    <strong>Nacionalidad:</strong>{' '}
+                    <strong>Nacionalidad:</strong>{" "}
                     <input
                       type="text"
                       name="nacionalidad"
@@ -181,7 +201,7 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Documento:</strong>{' '}
+                    <strong>Documento:</strong>{" "}
                     <input
                       type="text"
                       name="documento"
@@ -190,7 +210,7 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Rango:</strong>{' '}
+                    <strong>Rango:</strong>{" "}
                     <input
                       type="number"
                       name="rango"
@@ -199,7 +219,7 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Nivel:</strong>{' '}
+                    <strong>Nivel:</strong>{" "}
                     <input
                       type="number"
                       name="nivel"
@@ -208,7 +228,7 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Es Administrador:</strong>{' '}
+                    <strong>Es Administrador:</strong>{" "}
                     <input
                       type="checkbox"
                       name="esAdministrador"
@@ -217,7 +237,7 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Partidas Jugadas:</strong>{' '}
+                    <strong>Partidas Jugadas:</strong>{" "}
                     <input
                       type="number"
                       name="partidas_jugadas"
@@ -226,7 +246,7 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Torneos Jugados:</strong>{' '}
+                    <strong>Torneos Jugados:</strong>{" "}
                     <input
                       type="number"
                       name="torneos_jugados"
@@ -235,7 +255,7 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Torneos No Ganados:</strong>{' '}
+                    <strong>Torneos No Ganados:</strong>{" "}
                     <input
                       type="number"
                       name="torneos_no_ganados"
@@ -244,7 +264,7 @@ const PlayersList = () => {
                     />
                   </p>
                   <p>
-                    <strong>Torneos Ganados:</strong>{' '}
+                    <strong>Torneos Ganados:</strong>{" "}
                     <input
                       type="number"
                       name="torneos_ganados"
@@ -252,8 +272,17 @@ const PlayersList = () => {
                       onChange={handleInputChange}
                     />
                   </p>
-                  <button className="save-button" onClick={handleSaveEdit}>Guardar</button>
-                  <button className="cancel-button" onClick={() => setEditingPlayerId(null)}>Cancelar</button>
+                  <div className="container-edit">
+                    <button className="save-button" onClick={handleSaveEdit}>
+                      Guardar
+                    </button>
+                    <button
+                      className="cancel-button"
+                      onClick={() => setEditingPlayerId(null)}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
                 </>
               ) : (
                 <>
@@ -264,11 +293,12 @@ const PlayersList = () => {
                     <strong>Sexo:</strong> {player.sexo}
                   </p>
                   <p>
-                    <strong>Fecha de Nacimiento:</strong>{' '}
+                    <strong>Fecha de Nacimiento:</strong>{" "}
                     {player.fechaNacimiento}
                   </p>
                   <p>
-                    <strong>Edad:</strong> {calculateAge(player.fechaNacimiento)}
+                    <strong>Edad:</strong>{" "}
+                    {calculateAge(player.fechaNacimiento)}
                   </p>
                   <p>
                     <strong>Nacionalidad:</strong> {player.nacionalidad}
@@ -283,8 +313,8 @@ const PlayersList = () => {
                     <strong>Nivel:</strong> {player.nivel}
                   </p>
                   <p>
-                    <strong>Es Administrador:</strong>{' '}
-                    {player.esAdministrador ? 'Sí' : 'No'}
+                    <strong>Es Administrador:</strong>{" "}
+                    {player.esAdministrador ? "Sí" : "No"}
                   </p>
                   <p>
                     <strong>Partidas Jugadas:</strong> {player.partidas_jugadas}
@@ -293,15 +323,25 @@ const PlayersList = () => {
                     <strong>Torneos Jugados:</strong> {player.torneos_jugados}
                   </p>
                   <p>
-                    <strong>Torneos No Ganados:</strong>{' '}
+                    <strong>Torneos No Ganados:</strong>{" "}
                     {player.torneos_no_ganados}
                   </p>
                   <p>
                     <strong>Torneos Ganados:</strong> {player.torneos_ganados}
                   </p>
                   <div className="button-container">
-                    <button className="edit-button" onClick={() => handleEditPlayer(player.id)}>Editar</button>
-                    <button className="delete-button" onClick={() => handleDeletePlayer(player.id)}>Eliminar</button>
+                    <button
+                      className="edit-button"
+                      onClick={() => handleEditPlayer(player.id)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDeletePlayer(player.id)}
+                    >
+                      Eliminar
+                    </button>
                   </div>
                 </>
               )}
@@ -309,7 +349,7 @@ const PlayersList = () => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

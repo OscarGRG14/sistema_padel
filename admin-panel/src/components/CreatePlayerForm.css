@@ -1,11 +1,18 @@
 .create-player-form {
-  max-width: 400px;
   padding: 20px;
+  max-width: 500px;
+  border-left: 4px solid #d0d0d0;
+  border-bottom: 4px solid #d0d0d0;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  margin: auto;
 }
 
 .create-player-form label {
-  display: block;
+  display: flex;
+  color: #252525;
+  font-weight: bold;
   margin-bottom: 10px;
+  flex-direction: column;
 }
 
 .create-player-form input[type="text"],
@@ -15,21 +22,40 @@
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border-bottom: 2px solid #ccc;
+  transition: 0.1s;
+  /* border-radius: 4px; */
+}
+
+.create-player-form input[type="text"]:focus,
+.create-player-form input[type="date"]:focus,
+.create-player-form input[type="number"]:focus,
+.create-player-form input[type="checkbox"]:focus {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-bottom: 3px solid #1858c5;
 }
 
 .create-player-form button {
   display: block;
   padding: 10px;
-  background-color: #4caf50;
+  background-color: #252525;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin: auto;
+  font-size: 1.2rem;
+  width: 100%;
+  transition: 0.1s;
 }
 
 .create-player-form button:hover {
-  background-color: #45a049;
+  background-color: #3d3d3d;
+}
+
+/* STYLE ERROR-MESSAGE */
+.error-message {
+  color: tomato;
 }

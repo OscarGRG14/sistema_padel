@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './TournamentList.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { motion } from "framer-motion";
+import "./TournamentList.css";
 
 const TournamentList = () => {
   const [tournaments, setTournaments] = useState([]);
   const [editingTournament, setEditingTournament] = useState(null);
   const [updatedTournamentData, setUpdatedTournamentData] = useState({
-    fecha: '',
-    hora: '',
-    cancha: '',
-    ubicacion: '',
+    fecha: "",
+    hora: "",
+    cancha: "",
+    ubicacion: "",
   });
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const TournamentList = () => {
 
   const fetchTournaments = () => {
     axios
-      .get('http://localhost:5000/tournaments')
+      .get("http://localhost:5000/tournaments")
       .then((response) => {
         setTournaments(response.data);
       })
@@ -32,7 +33,9 @@ const TournamentList = () => {
       .delete(`http://localhost:5000/tournaments/${tournamentId}`)
       .then((response) => {
         console.log(response.data);
-        setTournaments(tournaments.filter((tournament) => tournament.id !== tournamentId));
+        setTournaments(
+          tournaments.filter((tournament) => tournament.id !== tournamentId)
+        );
       })
       .catch((error) => {
         console.error(error);
@@ -40,7 +43,9 @@ const TournamentList = () => {
   };
 
   const handleEdit = (tournamentId) => {
-    const tournamentToEdit = tournaments.find((tournament) => tournament.id === tournamentId);
+    const tournamentToEdit = tournaments.find(
+      (tournament) => tournament.id === tournamentId
+    );
     setEditingTournament(tournamentId);
     setUpdatedTournamentData({
       fecha: tournamentToEdit.fecha,
@@ -59,15 +64,18 @@ const TournamentList = () => {
 
   const handleUpdate = (tournamentId) => {
     axios
-      .put(`http://localhost:5000/tournaments/${tournamentId}`, updatedTournamentData)
+      .put(
+        `http://localhost:5000/tournaments/${tournamentId}`,
+        updatedTournamentData
+      )
       .then((response) => {
         console.log(response.data);
         setEditingTournament(null);
         setUpdatedTournamentData({
-          fecha: '',
-          hora: '',
-          cancha: '',
-          ubicacion: '',
+          fecha: "",
+          hora: "",
+          cancha: "",
+          ubicacion: "",
         });
         fetchTournaments(); // Actualizar la lista de torneos después de editar
       })
@@ -77,25 +85,31 @@ const TournamentList = () => {
   };
 
   const subscribeToTournamentChanges = () => {
-    const eventSource = new EventSource('http://localhost:5000/tournaments/subscribe');
+    const eventSource = new EventSource(
+      "http://localhost:5000/tournaments/subscribe"
+    );
 
-    eventSource.addEventListener('tournamentCreated', (event) => {
+    eventSource.addEventListener("tournamentCreated", (event) => {
       const newTournament = JSON.parse(event.data);
       setTournaments((prevTournaments) => [...prevTournaments, newTournament]);
     });
 
-    eventSource.addEventListener('tournamentDeleted', (event) => {
+    eventSource.addEventListener("tournamentDeleted", (event) => {
       const deletedTournamentId = JSON.parse(event.data);
       setTournaments((prevTournaments) =>
-        prevTournaments.filter((tournament) => tournament.id !== deletedTournamentId)
+        prevTournaments.filter(
+          (tournament) => tournament.id !== deletedTournamentId
+        )
       );
     });
 
-    eventSource.addEventListener('tournamentUpdated', (event) => {
+    eventSource.addEventListener("tournamentUpdated", (event) => {
       const updatedTournament = JSON.parse(event.data);
       setTournaments((prevTournaments) =>
         prevTournaments.map((tournament) =>
-          tournament.id === updatedTournament.id ? updatedTournament : tournament
+          tournament.id === updatedTournament.id
+            ? updatedTournament
+            : tournament
         )
       );
     });
@@ -106,7 +120,12 @@ const TournamentList = () => {
   }, []);
 
   return (
-    <div className="tournament-list">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="tournament-list"
+    >
       <h2>Lista de Torneos</h2>
       <div className="card-container">
         {tournaments.map((tournament) => (
@@ -155,7 +174,12 @@ const TournamentList = () => {
                     />
                   </div>
                   <div className="card-buttons">
-                    <button onClick={() => handleUpdate(tournament.id)}>Guardar</button>
+                    <button
+                      className="btn-save"
+                      onClick={() => handleUpdate(tournament.id)}
+                    >
+                      Guardar
+                    </button>
                   </div>
                 </>
               ) : (
@@ -173,8 +197,18 @@ const TournamentList = () => {
                     <strong>Ubicación:</strong> {tournament.ubicacion}
                   </p>
                   <div className="card-buttons">
-                    <button onClick={() => handleDelete(tournament.id)}>Eliminar</button>
-                    <button onClick={() => handleEdit(tournament.id)}>Editar</button>
+                    <button
+                      className="btn-remove"
+                      onClick={() => handleDelete(tournament.id)}
+                    >
+                      Eliminar
+                    </button>
+                    <button
+                      className="btn-edit"
+                      onClick={() => handleEdit(tournament.id)}
+                    >
+                      Editar
+                    </button>
                   </div>
                 </>
               )}
@@ -182,7 +216,7 @@ const TournamentList = () => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

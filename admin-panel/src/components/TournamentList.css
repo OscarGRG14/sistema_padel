@@ -1,32 +1,56 @@
+button {
+  width: 100%;
+}
+
+label {
+  color: #252525;
+}
+
 .tournament-list {
-    padding: 20px;
+  padding: 20px;
 }
 
 .tournament-list .card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 20px;
-
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .tournament-list .card-container .card {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    max-width: 300px; /* Define el ancho máximo de la tarjeta */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  max-width: 300px; /* Define el ancho máximo de la tarjeta */
 }
 
 .tournament-list .card-container .card-content {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.tournament-list .card-container .card-content div {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
 }
 
 .tournament-list .card-container .card-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
+  gap: 5px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 
-.tournament-list .card-container .card-buttons button {
-    margin-left: 10px;
+.tournament-list .card-container .card-buttons .btn-save {
+  background-color: #252525;
 }
-  
+
+.tournament-list .card-container .card-buttons .btn-remove {
+  background-color: #f44336;
+}
+
+.tournament-list .card-container .card-buttons .btn-edit {
+  background-color: #2196f3;
+}
+
+.container-edit {
+  display: flex;
+}
